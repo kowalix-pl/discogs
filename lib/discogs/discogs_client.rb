@@ -4,12 +4,14 @@ class DiscogsClient
       @json_client = JSONClient.new 'https://api.discogs.com'
       @json_client.authenticate(:Discogs, "key=wWWyDqOgmbTRFyKSQWzS, secret=uYzJSMRGcjueIJIQuPykXEDRhLvkhrYk")
     end 
+  
+    def get_results(phrase)
+      json = @json_client.get'/database/search', {q: phrase}
+      json["results"]
+    end 
 
-    def search(phrase)
-      puts "Welcome to the album universe, our program will where you will be able to get more information about your favourite album."
-      
-       json = @json_client.get'/database/search', {q: phrase}
-       results = json["results"]
+    def search(phrase) 
+       results = get_results(phrase)
        release = results.find {|e| e["type"] == "release" && e["format"].include?("CD") && e["format"].include?("Album") }
        release
     end 
