@@ -1,7 +1,12 @@
 class UserInterface
 
-def initialize
- @message = "Welcome to our program. What is your name?" 
+   def initialize
+    @message = "Welcome to our program. What is your name?" 
+   end 
+
+def run  
+ print_message
+ collect_user_input
 end 
 
 def print_message
@@ -19,9 +24,9 @@ end
 def collect_user_input
  @name = gets.strip
 
- 
  puts "Hi #{@name}! Select 1. if you would like to learn more about the artist, or select 2 to find out about the album, or select 3 to exit the program"
-  while @choice !=3 do 
+  
+ while @choice !=3 do 
  @choice = gets.strip.to_i
  if @choice == 1
     list_artist
