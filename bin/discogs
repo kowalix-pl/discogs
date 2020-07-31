@@ -3,5 +3,7 @@
 $:.unshift(File.expand_path(File.join(File.dirname(__FILE__), '..', 'lib')))
 
 require 'discogs'
+require '../lib/discogs/discogs_new'
 
-DiscogsApp.new(ARGV.first).run
+new_user = UserInterface.new("Peter")
+new_user.print_message
