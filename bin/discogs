@@ -5,5 +5,6 @@ $:.unshift(File.expand_path(File.join(File.dirname(__FILE__), '..', 'lib')))
 require 'discogs'
 require '../lib/discogs/discogs_new'
 
-new_user = UserInterface.new("Peter")
+new_user = UserInterface.new
 new_user.print_message
+new_user.collect_user_input
