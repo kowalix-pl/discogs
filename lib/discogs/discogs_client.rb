@@ -12,8 +12,9 @@ class DiscogsClient
 
     def search(phrase) 
        results = get_results(phrase)
-       release = results.find {|e| e["type"] == "release" && e["format"].include?("CD") && e["format"].include?("Album") }
-       release
+       results.select {|result| result["type"] == "artist"}
+      #  release = results.find {|e| e["type"] == "release" && e["format"].include?("CD") && e["format"].include?("Album") }
+      #  release
     end 
 
     def find_album(album_url)
