@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require_relative '../lib/discogs/discogs_new'
+require_relative '../lib/environment'
 
 new_user = UserInterface.new
 new_user.run

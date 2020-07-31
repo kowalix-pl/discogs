@@ -15,6 +15,8 @@ end
 
 def list_artist
  puts "I am the artist"
+ @discogs_client = DiscogsClient.new
+ puts @discogs_client.search(@search_artist)
 end 
 
 def list_album
@@ -29,8 +31,12 @@ def collect_user_input
  while @choice !=3 do 
  @choice = gets.strip.to_i
  if @choice == 1
+   puts "Please enter the name of the artists you are interested in:"
+    @search_artist = gets.strip
     list_artist
  elsif @choice == 2 
+   puts "Please enter the name of the album you are interested in"
+    @search_album = gets.strip
     list_album
  elsif  @choice == 3
     puts "Goodbye" #the loop will exit
