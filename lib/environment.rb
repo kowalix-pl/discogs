@@ -3,6 +3,7 @@ require 'pry'
 require 'json'
 require 'faraday'
 require 'awesome_print'
+require 'colorize'
 
 require_relative './discogs/user_interface'
 require_relative './discogs/json_client'

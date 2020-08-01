@@ -10,7 +10,7 @@ def run
 end 
 
 def print_message
- puts @message
+ puts @message.colorize(:yellow)
 end 
 
 def list_artist(search_artist)
@@ -28,16 +28,16 @@ end
 def collect_user_input
  @name = gets.strip
 
- puts "Hi #{@name}! Select 1. if you would like to learn more about the artist, or select 2 to find out about the album, or select 3 to exit the program"
+ puts "Hi #{@name}! please type 1. if you would like to learn more about the artist, or type 2 to find out about the album, or type 3 to exit the program".colorize(:yellow)
   
  while @choice !=3 do 
  @choice = gets.strip.to_i
  if @choice == 1
-   puts "Please enter the name of the artists you are interested in:"
+   puts "Please enter the name of the artists you are interested in:".colorize(:yellow)
     search_artist = gets.strip
     list_artist(search_artist)
  elsif @choice == 2 
-   puts "Please enter the name of the album you are interested in"
+   puts "Please enter the name of the album you are interested in".colorize(:yellow)
     search_album = gets.strip
     list_album(search_album)
  elsif  @choice == 3
@@ -48,11 +48,4 @@ def collect_user_input
  end 
 end 
 
-end 
-
-# Welcome message
-# Choose from 2 options
-# 1. Search by album name
-# 2. Search by artist name
-# 1
-# please enter the album name end 
+end
