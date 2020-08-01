@@ -8,15 +8,26 @@ class DiscogsClient
     def get_results(phrase)
       json = @json_client.get'/database/search', {q: phrase}
       json["results"]
+    end
+
+    def display_string_or_array(arg)
+     if arg.instance_of?(String) 
+        return arg
+     else 
+       return arg.join(", ")
+     end 
     end 
+     
     def display_album(hash)
         array = []
         array << "Album Title: #{hash["title"]}"
         array << "Album genre: #{hash["genre"].join(", ")}" unless hash["genre"] == nil
+        array  <<"Album label: #{display_string_or_array(hash["label"])}" unless hash["label"] == nil
         array << "Album Year: #{hash["year"]}" unless hash["year"] == nil
         array << "Album Style: #{hash["style"].join(", ")}" unless hash["style"] == nil
         array.join("\n")
     end 
+
     def search_artist(phrase)  
       results = get_results(phrase)
         artists = results.select {|result| result["type"] == "artist"}
