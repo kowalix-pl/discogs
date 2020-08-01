@@ -28,40 +28,32 @@ class DiscogsClient
         array.join("\n")
     end 
     
-    # def display_artist(hash)
-    #   #To be checked#
-    #   array = []
-    #   array << "1.Artist Name: ".colorize(:yellow)+"#{hash["title"].colorize(:blue)}"
-    #   array << "2.Artist Albums: ".colorize(:yellow)+"#{hash["tilte"].join(", ")}" unless hash["title"] == nil
-    #   array << "2.Artist Genre: ".colorize(:yellow)+"#{hash["genre"].join(", ")}" unless hash["genre"] == nil
-    #   array << "4.Artist Style: ".colorize(:yellow)+"#{hash["style"].join(", ")}" unless hash["style"] == nil
-    #   array << "5.Artist Label: ".colorize(:yellow)+"#{display_string_or_array(hash["label"])}" unless hash["label"] == nil
-    #   array.join("\n")
-    # end 
+    def display_artist(artist_hash,artist_albums)
+      header = [
+        "Artist Name: #{artist_hash['title']}",
+        "Album Title & Release Year:"
+        ]
+      body = artist_albums.map.with_index(1) do |album_data, index|
+        "  #{index}. #{album_data["title"]} - #{album_data["year"]}"
+      end
+      (header+body).join("\n")
+    end 
 
     def search_artist(phrase)  
         results = get_results(phrase)
-         artists = results.select{|result| result["type"] == "artist"}  
-       
-        
-          artist_tid = artists.map do |artist| 
-          artist_array = []
-          artist_array << artist["title"]
-
-          artist_array << search_artist_data(artist["id"])
-         artist_array
-       end 
-       artist_tid 
+        artists = results.select{|result| result["type"] == "artist"}         
+        artists.map do |artist| 
+          display_artist(artist,search_artist_albums(artist["id"]))
+        end 
     end 
 
     def search_album(phrase)  
       results = get_results(phrase)
       albums = results.select {|result| result["type"] == "release"}
       albums.map {|hash| display_album(hash)} 
-
     end 
 
-    def search_artist_data(artist_id)
+    def search_artist_albums(artist_id)
        json = @json_client.get "/artists/#{artist_id}/releases"
        albums = json["releases"].select do |release|
          format = release["format"]
@@ -70,9 +62,7 @@ class DiscogsClient
          next true if format.include?("Album")
          false
       end 
-       albums.map do |hash| 
-        display_album(hash)
-      end 
+       albums
     end 
 
     def find_album(album_url)
