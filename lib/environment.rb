@@ -1,5 +1,5 @@
 require 'bundler/setup'
-
+require 'pry'
 require 'json'
 require 'faraday'
 require 'awesome_print'

@@ -10,21 +10,38 @@ class DiscogsClient
       json["results"]
     end 
 
-    def search(phrase) 
-       results = get_results(phrase)
-       results.select {|result| result["type"] == "artist"}
-       search_artist_data
-       []
-      #  release = results.find {|e| e["type"] == "release" && e["format"].include?("CD") && e["format"].include?("Album") }
-      #  release
+    def search_artist(phrase)  
+      results = get_results(phrase)
+        artists = results.select {|result| result["type"] == "artist"}
+        artist_tid = artists.map do |artist| 
+        artist_array = []
+        artist_array << artist["title"] 
+        artist_array << search_artist_data(artist["id"])
+        artist_array
+      end 
+       artist_tid
     end 
 
-    def search_artist_data
-      json = @json_client.get '/artists/716297/releases'
-      releases = json["releases"].map do |release| 
-        "Release:#{release["title"]} \nLabel: #{release["label"]}\nYear: #{release["year"]}"
+    def search_album(phrase)  
+      results = get_results(phrase)
+      albums = results.select {|result| result["type"] == "release"}
+      albums.map do |hash|
+        array = []
+        array << "Title: #{hash["title"]}"
+        array << "Album genre: #{hash["genre"].join(", ")}"
+        array << "Year: #{hash["year"]}" unless hash["year"] == nil
+        array << "Style: #{hash["style"].join(", ")}"
+        array.join("\n")
       end 
-      puts releases
+    end 
+
+    def search_artist_data(artist_id)
+      json = @json_client.get "/artists/#{artist_id}/releases"
+      releases = json["releases"].map do |release| 
+      "Release:#{release["title"]} \nAlbum label: #{release["label"]}\nYear: #{release["year"]}"
+      
+    end 
+      releases
     end 
 
     def find_album(album_url)

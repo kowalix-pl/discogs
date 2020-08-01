@@ -13,14 +13,16 @@ def print_message
  puts @message
 end 
 
-def list_artist
+def list_artist(search_artist)
  puts "I am the artist"
  @discogs_client = DiscogsClient.new
- puts @discogs_client.search(@search_artist)
+ puts @discogs_client.search_artist(search_artist)
 end 
 
-def list_album
+def list_album(search_album)
  puts " I am the album"
+ @discogs_client = DiscogsClient.new
+ puts @discogs_client.search_album(search_album)
 end 
 
 def collect_user_input
@@ -32,12 +34,12 @@ def collect_user_input
  @choice = gets.strip.to_i
  if @choice == 1
    puts "Please enter the name of the artists you are interested in:"
-    @search_artist = gets.strip
-    list_artist
+    search_artist = gets.strip
+    list_artist(search_artist)
  elsif @choice == 2 
    puts "Please enter the name of the album you are interested in"
-    @search_album = gets.strip
-    list_album
+    search_album = gets.strip
+    list_album(search_album)
  elsif  @choice == 3
     puts "Goodbye" #the loop will exit
  else 
