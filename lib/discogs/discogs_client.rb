@@ -50,7 +50,20 @@ class DiscogsClient
     def search_album(phrase)  
       results = get_results(phrase)
       albums = results.select {|result| result["type"] == "release"}
-      albums.map {|hash| display_album(hash)} 
+      new_albums = albums.group_by do |element|
+       element["title"]
+      end
+      new_albums.keys.map do |album_title|
+       h = Hash.new 
+       data = new_albums[album_title]
+     
+       h["title"] = album_title
+       h["year"] = (data.map {|element| element["year"].to_i}).select {|year| year > 0}.sort.uniq.join(", ")
+       h["genre"] = (data.map {|element| element["genre"]}).flatten.sort.uniq
+       h["style"] = (data.map {|element| element["style"]}).flatten.sort.uniq
+       h["label"] = (data.map {|element| element["label"]}).flatten.sort.uniq
+       display_album(h)
+      end 
     end 
 
     def search_artist_albums(artist_id)

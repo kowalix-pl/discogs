@@ -4,5 +4,6 @@ require_relative '../lib/environment'
 
 new_user = UserInterface.new
 # new_user.run
-new_user.list_artist("2pac")
-# new_user.run 
+# new_user.list_artist("2pac")
+# new_user.list_album("all eyez on me")
+new_user.run 
