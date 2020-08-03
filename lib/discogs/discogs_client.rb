@@ -1,4 +1,3 @@
-
 class DiscogsClient
 
     def initialize
@@ -10,23 +9,12 @@ class DiscogsClient
       json = @json_client.get'/database/search', {q: phrase}
       json["results"]
     end
-    
-    def display_artist(artist_hash,artist_albums)
-      header = [
-        "Artist Name: #{artist_hash['title']}",
-        "Album Title & Release Year:"
-        ]
-      body = artist_albums.map.with_index(1) do |album_data, index|
-        "  #{index}. #{album_data["title"]} - #{album_data["year"]}"
-      end
-      (header+body).join("\n")
-    end 
 
     def search_artist(phrase)  
         results = get_results(phrase)
         artists = results.select{|result| result["type"] == "artist"}         
         artists.map do |artist| 
-          display_artist(artist,search_artist_albums(artist["id"]))
+         {artist: artist,albums: search_artist_albums(artist["id"])}
         end 
     end 
 
@@ -74,4 +62,5 @@ class DiscogsClient
     def find_album(album_url)
         @json_client.get(album_url)
     end 
+
 end 
