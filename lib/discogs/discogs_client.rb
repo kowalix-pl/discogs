@@ -22,17 +22,20 @@ class DiscogsClient
     def display_album(hash)
         array = []
         array << "1.Album Title: ".colorize(:yellow)+"#{hash["title"].colorize(:blue)}"
-        array << "1.Album Artist: ".colorize(:yellow)+"#{hash["artists"]}"
+        array << "1.Album Artist: ".colorize(:yellow)+"#{hash["artist"]}"
         array << "2.Album Genre: ".colorize(:yellow)+"#{hash["genre"].join(", ")}" unless hash["genre"] == nil
         array << "3.Album Years: ".colorize(:yellow)+"#{hash["year"]}" unless hash["year"] == nil
         array << "4.Album Styles: ".colorize(:yellow)+"#{hash["style"].join(", ")}" unless hash["style"] == nil
         array << "5.Album Labels: ".colorize(:yellow)+"#{display_string_or_array(hash["label"])}" unless hash["label"] == nil
-        tracklist = hash["tracklist"].map do |track|
-          position = track["position"].rjust(2)
-          duration = "[#{track["duration"]}]".rjust(7)
+        tracklist = hash["tracklist"].map.with_index(1) do |track,i|
+          position = i.to_s.rjust(3)+ " "
+          duration = "[#{track["duration"]}]".rjust(6)
           track = track["title"]
-          position + duration +" " + track
+          result = position + track
+          result = result + " " + duration unless track["duration"].nil?
+          result
         end
+        tracklist = ["  # Title ".colorize(:blue)] + tracklist
         array << "6.Album Tracklist:\n ".colorize(:yellow)+"#{tracklist.join("\n ")}" 
         array.join("\n")
     end 
@@ -65,20 +68,24 @@ class DiscogsClient
       new_albums.keys.map do |album_title|
        h = Hash.new 
        data = new_albums[album_title]
-     
        h["title"] = album_title
        h["year"] = (data.map {|element| element["year"].to_i}).select {|year| year > 0}.sort.uniq.join(", ")
        h["genre"] = (data.map {|element| element["genre"]}).flatten.sort.uniq
        h["style"] = (data.map {|element| element["style"]}).flatten.sort.uniq
-       h["label"] = (data.map {|element| element["label"]}).flatten.sort.uniq
-       h["tracklist"] = album_tracklist(data.first["id"])
+       h["label"] = (data.map {|element| element["label"]}).flatten.sort.uniq.take(5)
+       album = album_data(data.first["id"])
+       h["tracklist"] = album["tracklist"]
+       h["artist"] = album["artist"]
        display_album(h)
       end 
     end 
 
-    def album_tracklist(album_id)
+    def album_data(album_id)
       json = @json_client.get "/releases/#{album_id}"
-      json["tracklist"]
+      album = {}
+      album["tracklist"] = json["tracklist"].select {|track| track["type_"] != "heading"}
+      album["artist"] = json["artists_sort"]
+      album
     end 
 
     def search_artist_albums(artist_id)
