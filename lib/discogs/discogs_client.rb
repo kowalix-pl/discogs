@@ -18,13 +18,22 @@ class DiscogsClient
       end 
     end 
      
+
     def display_album(hash)
         array = []
         array << "1.Album Title: ".colorize(:yellow)+"#{hash["title"].colorize(:blue)}"
+        array << "1.Album Artist: ".colorize(:yellow)+"#{hash["artists"]}"
         array << "2.Album Genre: ".colorize(:yellow)+"#{hash["genre"].join(", ")}" unless hash["genre"] == nil
-        array << "3.Album Year:  ".colorize(:yellow)+"#{hash["year"]}" unless hash["year"] == nil
-        array << "4.Album Style: ".colorize(:yellow)+"#{hash["style"].join(", ")}" unless hash["style"] == nil
-        array << "5.Album Label: ".colorize(:yellow)+"#{display_string_or_array(hash["label"])}" unless hash["label"] == nil
+        array << "3.Album Years: ".colorize(:yellow)+"#{hash["year"]}" unless hash["year"] == nil
+        array << "4.Album Styles: ".colorize(:yellow)+"#{hash["style"].join(", ")}" unless hash["style"] == nil
+        array << "5.Album Labels: ".colorize(:yellow)+"#{display_string_or_array(hash["label"])}" unless hash["label"] == nil
+        tracklist = hash["tracklist"].map do |track|
+          position = track["position"].rjust(2)
+          duration = "[#{track["duration"]}]".rjust(7)
+          track = track["title"]
+          position + duration +" " + track
+        end
+        array << "6.Album Tracklist:\n ".colorize(:yellow)+"#{tracklist.join("\n ")}" 
         array.join("\n")
     end 
     
@@ -62,8 +71,14 @@ class DiscogsClient
        h["genre"] = (data.map {|element| element["genre"]}).flatten.sort.uniq
        h["style"] = (data.map {|element| element["style"]}).flatten.sort.uniq
        h["label"] = (data.map {|element| element["label"]}).flatten.sort.uniq
+       h["tracklist"] = album_tracklist(data.first["id"])
        display_album(h)
       end 
+    end 
+
+    def album_tracklist(album_id)
+      json = @json_client.get "/releases/#{album_id}"
+      json["tracklist"]
     end 
 
     def search_artist_albums(artist_id)
