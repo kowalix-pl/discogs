@@ -14,7 +14,7 @@ class AlbumDisplayer
       array << "5.Album Styles: ".colorize(:yellow)+"#{@hash["style"].join(", ")}" unless @hash["style"] == nil
       array << "6.Album Labels: ".colorize(:yellow)+"#{display_string_or_array(@hash["label"])}" unless @hash["label"] == nil
       array << "7.Album Tracklists:\n\n".colorize(:yellow)+"#{format_tracklist}" 
-      array.join("\n") + "\n"
+      array.join("\n")+"\n "
     end 
 
     def format_tracklist
