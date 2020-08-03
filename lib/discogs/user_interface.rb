@@ -14,13 +14,11 @@ def print_message
 end 
 
 def list_artist(search_artist)
- puts "I am the artist"
  @discogs_client = DiscogsClient.new
  puts @discogs_client.search_artist(search_artist)
 end 
 
 def list_album(search_album)
- puts " I am the album"
  @discogs_client = DiscogsClient.new
  puts @discogs_client.search_album(search_album)
 end 
