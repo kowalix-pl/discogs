@@ -20,7 +20,12 @@ end
 
 def list_album(search_album)
  @discogs_client = DiscogsClient.new
- puts @discogs_client.search_album(search_album)
+ data = @discogs_client.search_album(search_album)
+
+ data.each do |album|
+   album_displayer = AlbumDisplayer.new
+   puts album_displayer.display_album(album)
+ end
 end 
 
 def collect_user_input
