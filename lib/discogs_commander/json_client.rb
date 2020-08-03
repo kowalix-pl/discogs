@@ -6,10 +6,10 @@ class JSONClient
     end
 
     def get(path, params ={})
-        response  = connection.get path, params do |request| #pobieramy dane z tej sciezki
+        response  = connection.get path, params do |request| 
          request.headers['Content-Type'] = "application/json"
       end 
-      body = response.body #Zwrot tresci pobranej z API
+      body = response.body
       json = JSON.parse(body)
       json
     end 

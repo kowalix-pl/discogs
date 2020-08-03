@@ -54,7 +54,7 @@ def collect_user_input
     search_album = gets.strip
     list_album(search_album)
  elsif  @choice == 3
-    puts "Goodbye" #the loop will exit
+    puts "Goodbye" 
  else 
     puts "I do not understand your choice!"
  end 
