@@ -1,3 +1,4 @@
+module DiscogsCommander
 class JSONClient
 
     def initialize(root_url)
@@ -25,4 +26,5 @@ class JSONClient
         faraday.authorization @authentication.first, @authentication.last if @authentication
         end
     end 
+ end 
 end 

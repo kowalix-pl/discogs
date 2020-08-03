@@ -1,3 +1,4 @@
+module DiscogsCommander
 class DiscogsClient
 
     def initialize
@@ -62,5 +63,5 @@ class DiscogsClient
     def find_album(album_url)
         @json_client.get(album_url)
     end 
-
-end 
+ end 
+end

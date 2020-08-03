@@ -1,3 +1,4 @@
+module DiscogsCommander
 class AlbumDisplayer
 
     def initialize(hash)
@@ -36,5 +37,6 @@ class AlbumDisplayer
       return arg if arg.instance_of?(String) 
       arg.join(", ")
     end 
-    
+
   end 
+end 

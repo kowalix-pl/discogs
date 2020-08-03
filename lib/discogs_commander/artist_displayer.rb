@@ -1,3 +1,4 @@
+module DiscogsCommander
 class ArtistDisplayer
 
     def initialize(artist_hash)
@@ -15,4 +16,5 @@ class ArtistDisplayer
         end
         (header+body).join("\n")
     end
+ end 
 end 

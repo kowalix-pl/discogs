@@ -1,3 +1,4 @@
+module DiscogsCommander
 class UserInterface
 
    def initialize
@@ -63,5 +64,5 @@ end
  def user_prompt
    puts "Hello".colorize(:yellow) +" #{@name}!".colorize(:blue)+" please choose one of the following options:".colorize(:yellow) + "\n Enter:".colorize(:yellow) + " 1 ".colorize(:blue) + "if you would like to learn more about your favourite" + " artist".colorize(:blue) +"\n Enter:".colorize(:yellow) +" 2 ".colorize(:blue) + "to learn more about your favourite" + " album\n".colorize(:blue) + " Enter:".colorize(:yellow) + " 3 ".colorize(:red) + "to" + " exit ".colorize(:red) + "the program"
  end 
-
-end
+ end
+end 
