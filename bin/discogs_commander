@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-require_relative '../lib/environment'
+require_relative '../lib/discogs_commander'
 
 new_user = DiscogsCommander::UserInterface.new
 new_user.run 

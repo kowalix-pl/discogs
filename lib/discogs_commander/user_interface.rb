@@ -44,7 +44,7 @@ end
 def collect_user_input
  @name = gets.strip
  user_prompt
- while @choice !=3 do 
+ while @choice !=4 do 
  @choice = gets.strip.to_i
  if @choice == 1
    puts "Please enter the name of the artist you are interested in:".colorize(:yellow)
@@ -55,7 +55,9 @@ def collect_user_input
     search_album = gets.strip
     list_album(search_album)
  elsif  @choice == 3
-    puts "Goodbye" 
+   user_prompt  
+ elsif @choice == 4
+  puts "Thank you for visiting our program, Have a nice day, Goodbye!".colorize(:yellow) 
  else 
     puts "I do not understand your choice!"
  end 
@@ -63,7 +65,14 @@ def collect_user_input
 end 
 
  def user_prompt
-   puts "Hello".colorize(:yellow) +" #{@name}!".colorize(:blue)+" please choose one of the following options:".colorize(:yellow) + "\n Enter:".colorize(:yellow) + " 1 ".colorize(:blue) + "if you would like to learn more about your favourite" + " artist".colorize(:blue) +"\n Enter:".colorize(:yellow) +" 2 ".colorize(:blue) + "to learn more about your favourite" + " album\n".colorize(:blue) + " Enter:".colorize(:yellow) + " 3 ".colorize(:red) + "to" + " exit ".colorize(:red) + "the program"
- end 
+  array = []
+  array << "Hello".colorize(:yellow) +" #{@name}!".colorize(:blue) 
+  array << " please choose one of the following options:".colorize(:yellow)
+  array << "Enter:".colorize(:yellow) + " 1 ".colorize(:blue) + "if you would like to learn more about your favourite" + " artist".colorize(:blue) 
+  array << "Enter:".colorize(:yellow) + " 2 ".colorize(:blue) + "to learn more about your favourite" + " album".colorize(:blue) 
+  array << "Enter:".colorize(:yellow) + " 3 ".colorize(:blue) + "to" + " display your" + " options ".colorize(:blue) 
+  array << "Enter:".colorize(:yellow) + " 4 ".colorize(:red) + "to" + " exit ".colorize(:red) + "the program"
+  puts array.join("\n")
+end 
  end
 end 
