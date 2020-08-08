@@ -1,20 +1,18 @@
 module DiscogsCommander
 class UserInterface
 
-   def initialize
-    @message = "Welcome to our program. What is your name?" 
-   end 
+ @@message = "Welcome to our program. What is your name?"
 
  def run  
-  print_message
+  UserInterface.print_message
   collect_user_input
  end 
 
- def print_message
-  puts @message.colorize(:yellow)
+ def self.print_message
+  puts @@message.colorize(:yellow)
  end 
 
-def list_artist(search_artist)
+ def list_artist(search_artist)
   @discogs_client = DiscogsClient.new
   artist_data = @discogs_client.search_artist(search_artist)
    if artist_data.empty?
@@ -39,6 +37,9 @@ def list_album(search_album)
    end
  end
 end 
+ 
+ def self.my_class_method
+ end 
 
 def collect_user_input
  @name = gets.strip
