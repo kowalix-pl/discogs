@@ -22,7 +22,7 @@ class AlbumDisplayer
          format_track(track,i)
         end
           (["  # Tracklists titles: ".colorize(:blue)] + tracklist).join("\n")   
-    end 
+        end 
 
     def format_track(track,i)
       position = i.to_s.rjust(3)+ ". "
