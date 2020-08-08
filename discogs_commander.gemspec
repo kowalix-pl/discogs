@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|  
     s.name = 'discogs_commander' 
-    s.version = '0.0.1'  
+    s.version = '0.0.2'  
     s.date = '2020-08-23'  
     s.summary = "Great Search Tool For Albums & Artists"  
     s.description = "This program uses DISCOGS API and allows users to search for information about artist and albums"  
