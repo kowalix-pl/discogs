@@ -1,6 +1,6 @@
 require 'rake'
 Gem::Specification.new do |s|  
-    s.name = 'DiscogsCommander' 
+    s.name = 'discogs_commander' 
     s.version = '0.0.1'  
     s.date = '2020-08-23'  
     s.summary = "Great Search Tool For Albums & Artists"  
