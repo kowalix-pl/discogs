@@ -15,8 +15,9 @@ class DiscogsClient
         results = get_results(phrase)
         artists = results.select{|result| result["type"] == "artist"}         
         artists.map do |artist| 
-         {artist: artist,albums: search_artist_albums(artist["id"])}
-        end 
+        #  {artist: artist,albums: search_artist_albums(artist["id"])}
+        Artist.new(artist['title'],search_artist_albums(artist["id"])) 
+      end 
     end 
 
     def search_album(phrase)  

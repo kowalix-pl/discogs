@@ -12,17 +12,21 @@ class UserInterface
   puts @@message.colorize(:yellow)
  end 
 
- def list_artist(search_artist)
-  @discogs_client = DiscogsClient.new
-  artist_data = @discogs_client.search_artist(search_artist)
-   if artist_data.empty?
-   puts "No results found!"
-   else 
+ def list_artist(name_query)
+  artist_data = Artist.find(name_query)
+   if artist_data.nil? 
+    @discogs_client = DiscogsClient.new
+    artist_data = @discogs_client.search_artist(name_query)
+    Artist.store(name_query)
+  end 
+    if artist_data.empty?
+     puts "No results found!"
+    else
    artist_data.each do |artist|
-   artist_displayer = ArtistDisplayer.new(artist)
-   puts artist_displayer.display_artist
-   end
- end 
+    artist_displayer = ArtistDisplayer.new(artist)
+    puts artist_displayer.display_artist
+    end 
+  end 
 end 
 
 def list_album(search_album)
@@ -33,13 +37,11 @@ def list_album(search_album)
   else 
    data.each do |album|
     album_displayer = AlbumDisplayer.new(album)
-    puts album_displayer.display_album
-   end
+    puts album_displayer.display_album 
+  end
  end
 end 
  
- def self.my_class_method
- end 
 
 def collect_user_input
  @name = gets.strip
@@ -73,6 +75,6 @@ end
   array << "Enter:".colorize(:yellow) + " 3 ".colorize(:blue) + "to" + " display your" + " options ".colorize(:blue) 
   array << "Enter:".colorize(:yellow) + " 4 ".colorize(:red) + "to" + " exit ".colorize(:red) + "the program"
   puts array.join("\n")
-end 
+ end 
  end
 end 
